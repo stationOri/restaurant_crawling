@@ -50,44 +50,44 @@ def extract_data():
             time.sleep(2)
             # 태그
             try:
-                tag = WebDriverWait(browser, 0.3).until(
+                keyword = WebDriverWait(browser, 0.3).until(
                     EC.presence_of_element_located((By.CSS_SELECTOR, '#restaurant-view > div.restaurant-view-panel > header > div.pull-left > div.header-status'))
                 ).text
-                data['tag'] = tag
+                data['keyword'] = keyword
             except:
-                data['tag'] = None
+                data['keyword'] = None
             # 레스토랑 이름
             try:
-                restname = WebDriverWait(browser, 0.1).until(
+                rest_name = WebDriverWait(browser, 0.1).until(
                     EC.presence_of_element_located((By.CSS_SELECTOR, '#restaurant-view > div.restaurant-view-panel > header > div.pull-left > div.header-title > h1'))
                 ).text
-                data['name'] = restname
+                data['rest_name'] = rest_name
             except:
-                data['name'] = None
+                data['rest_name'] = None
             # 전화번호
             try:
-                phone = WebDriverWait(browser, 0.1).until(
+                rest_phone = WebDriverWait(browser, 0.1).until(
                     EC.presence_of_element_located((By.CSS_SELECTOR, '#restaurant-view > div.restaurant-view-panel > div > div.box-info.border.restaurant-info-1 > div > div.col-md-6.border-right-lg > dl > dd:nth-child(2) > a'))
                 ).text
-                data['phone'] = phone
+                data['rest_phone'] = rest_phone
             except:
-                data['phone'] = None
+                data['rest_phone'] = None
             # 주소
             try:
-                address = WebDriverWait(browser, 0.1).until(
+                rest_address = WebDriverWait(browser, 0.1).until(
                     EC.presence_of_element_located((By.CSS_SELECTOR, '#restaurant-view > div.restaurant-view-panel > div > div.box-info.border.restaurant-info-1 > div > div.col-md-6.border-right-lg > dl > dd:nth-child(4)'))
                 ).text
-                data['address'] = address
+                data['rest_address'] = rest_address
             except:
-                data['address'] = None
+                data['rest_address'] = None
             # 영업시간
             try:
-                openingHours = WebDriverWait(browser, 0.1).until(
+                rest_opentime = WebDriverWait(browser, 0.1).until(
                     EC.presence_of_element_located((By.CSS_SELECTOR, '#restaurant-view > div.restaurant-view-panel > div > div.box-info.border.restaurant-info-1 > div > div.col-md-6.padding-lg-left > dl > dd'))
                 ).text
-                data['openingHours'] = openingHours
+                data['rest_opentime'] = rest_opentime
             except:
-                data['openingHours'] = None
+                data['rest_opentime'] = None
             # 메뉴
             try:
                 menu = WebDriverWait(browser, 0.1).until(
