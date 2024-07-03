@@ -34,7 +34,7 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 # 웹드라이버 설정
 browser = webdriver.Chrome()
-browser.get('https://www.bluer.co.kr/search?tabMode=single&searchMode=ribbonType&location=&ribbonType=NOT&feature=')
+browser.get('https://www.bluer.co.kr/search?tabMode=single&searchMode=ribbonType&location=&ribbonType=RIBBON_ONE&feature=')
 time.sleep(5)
 resultset = []
 def extract_data():
@@ -44,13 +44,13 @@ def extract_data():
         try:
             browser.execute_script("arguments[0].scrollIntoView();", card)
             time.sleep(0.5)
-            WebDriverWait(browser, 0.1).until(
+            WebDriverWait(browser, 10).until(
                 EC.element_to_be_clickable(card)
             ).click()
-            time.sleep(2)
+            time.sleep(0.5)
             # 태그
             try:
-                keyword = WebDriverWait(browser, 0.3).until(
+                keyword = WebDriverWait(browser, 10).until(
                     EC.presence_of_element_located((By.CSS_SELECTOR, '#restaurant-view > div.restaurant-view-panel > header > div.pull-left > div.header-status'))
                 ).text
                 data['keyword'] = keyword
@@ -58,7 +58,7 @@ def extract_data():
                 data['keyword'] = None
             # 레스토랑 이름
             try:
-                rest_name = WebDriverWait(browser, 0.1).until(
+                rest_name = WebDriverWait(browser, 10).until(
                     EC.presence_of_element_located((By.CSS_SELECTOR, '#restaurant-view > div.restaurant-view-panel > header > div.pull-left > div.header-title > h1'))
                 ).text
                 data['rest_name'] = rest_name
@@ -66,7 +66,7 @@ def extract_data():
                 data['rest_name'] = None
             # 전화번호
             try:
-                rest_phone = WebDriverWait(browser, 0.1).until(
+                rest_phone = WebDriverWait(browser, 10).until(
                     EC.presence_of_element_located((By.CSS_SELECTOR, '#restaurant-view > div.restaurant-view-panel > div > div.box-info.border.restaurant-info-1 > div > div.col-md-6.border-right-lg > dl > dd:nth-child(2) > a'))
                 ).text
                 data['rest_phone'] = rest_phone
@@ -74,7 +74,7 @@ def extract_data():
                 data['rest_phone'] = None
             # 주소
             try:
-                rest_address = WebDriverWait(browser, 0.1).until(
+                rest_address = WebDriverWait(browser, 10).until(
                     EC.presence_of_element_located((By.CSS_SELECTOR, '#restaurant-view > div.restaurant-view-panel > div > div.box-info.border.restaurant-info-1 > div > div.col-md-6.border-right-lg > dl > dd:nth-child(4)'))
                 ).text
                 data['rest_address'] = rest_address
@@ -82,7 +82,7 @@ def extract_data():
                 data['rest_address'] = None
             # 영업시간
             try:
-                rest_opentime = WebDriverWait(browser, 0.1).until(
+                rest_opentime = WebDriverWait(browser, 10).until(
                     EC.presence_of_element_located((By.CSS_SELECTOR, '#restaurant-view > div.restaurant-view-panel > div > div.box-info.border.restaurant-info-1 > div > div.col-md-6.padding-lg-left > dl > dd'))
                 ).text
                 data['rest_opentime'] = rest_opentime
@@ -90,7 +90,7 @@ def extract_data():
                 data['rest_opentime'] = None
             # 메뉴
             try:
-                menu = WebDriverWait(browser, 0.1).until(
+                menu = WebDriverWait(browser, 10).until(
                     EC.presence_of_element_located((By.CSS_SELECTOR, '#restaurant-view > div.restaurant-view-panel > div > div.box-info.border.restaurant-info-3 > div > div.col-md-6.border-right-lg.restaurant-info-3-note-parent > dl:nth-child(1) > dd'))
                 ).text
                 data['menu'] = menu
@@ -98,7 +98,7 @@ def extract_data():
                 data['menu'] = None
             # 찾아가기
             try:
-                find_path = WebDriverWait(browser, 0.1).until(
+                find_path = WebDriverWait(browser, 10).until(
                     EC.presence_of_element_located((By.XPATH, '//*[@id="restaurant-view"]//dl[dt="찾아가기"]/dd'))
                 ).text
                 data['find_path'] = find_path
@@ -106,7 +106,7 @@ def extract_data():
                 data['find_path'] = None
             # 특징
             try:
-                feature = WebDriverWait(browser, 0.1).until(
+                feature = WebDriverWait(browser, 10).until(
                     EC.presence_of_element_located((By.XPATH, '//*[@id="restaurant-view"]/div[1]/div/div[2]/div/div[2]/dl[dt="특징"]/dd'))
                 ).text
                 data['feature'] = feature
@@ -126,12 +126,12 @@ def extract_data():
             except Exception as e:
                 data['image_url'] = None
             resultset.append(data)
-            time.sleep(0.5)
-            close_button = WebDriverWait(browser, 0.1).until(
+            time.sleep(1)
+            close_button = WebDriverWait(browser, 10).until(
                 EC.element_to_be_clickable((By.CSS_SELECTOR, '#restaurant-view > div.restaurant-view-panel > header > div.btn-close'))
             )
             close_button.click()
-            time.sleep(0.5)
+            time.sleep(1)
         except Exception as e:
             print(f"오류 발생: {e}")
             continue
@@ -140,7 +140,7 @@ while True:
     extract_data()
     try:
         current_page += 1
-        next_button = WebDriverWait(browser, 0.1).until(
+        next_button = WebDriverWait(browser, 10).until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, f'li[data-lp="{current_page}"] > a'))
         )
         next_button.click()
