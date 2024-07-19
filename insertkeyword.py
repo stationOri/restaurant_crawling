@@ -2,12 +2,13 @@ import pymysql
 
 # MySQL 연결 설정
 db = pymysql.connect(
-    host='localhost',
+    host='3.38.214.167',
     user='root',  # MySQL 사용자 이름
-    password='1111',  # MySQL 비밀번호
-    database='oristation',  # 사용할 데이터베이스 이름
+    password='ori6006',  # MySQL 비밀번호
+    database='WaitMate',
     charset='utf8mb4'
 )
+
 
 # 삽입할 데이터 리스트
 keywords = [
@@ -22,7 +23,11 @@ keywords = [
 ]
 
 try:
+
     with db.cursor() as cursor:
+        sql = "ALTER TABLE keyword CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+        cursor.execute(sql)
+        db.commit()
         # 여러 개의 행을 한 번에 삽입하기 위한 SQL 문장 작성
         sql = "INSERT INTO keyword (keyword) VALUES (%s)"
 
